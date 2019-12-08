@@ -23,7 +23,7 @@ wrapper {
     distributionUrl = distributionUrl.replace("bin", "all")
 }
 
-//task stage(dependsOn: 'installDist')
+task stage(dependsOn: ['installDist'])
 
 sourceCompatibility = 1.8
 
@@ -32,12 +32,6 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
-}
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
 }
 
 repositories {
