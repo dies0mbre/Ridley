@@ -2,7 +2,7 @@ group 'kotlinserver'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.61'
+    ext.kotlin_version = '1.3.41'
     ext.ktor_version = '1.2.6'
 
     repositories {
@@ -13,9 +13,17 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
 apply plugin: 'kotlin'
-//mainClassName = "com.example.kotlinserver.MainKt"
+apply plugin: 'java'
+apply plugin: 'application'
+mainClassName = 'io.ktor.server.netty.EngineMain'
+
+wrapper {
+    gradleVersion = '5.4.1'
+    distributionUrl = distributionUrl.replace("bin", "all")
+}
+
+//task stage(dependsOn: 'installDist')
 
 sourceCompatibility = 1.8
 
@@ -38,11 +46,11 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "org.slf4j:slf4j-api:1.6.1"
-    compile "org.slf4j:slf4j-simple:1.6.1"
-    compile "io.ktor:ktor-gson:$ktor_version"
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
+    implementation("org.slf4j:slf4j-api:1.6.1")
+    implementation("org.slf4j:slf4j-simple:1.6.1")
+    implementation("io.ktor:ktor-gson:$ktor_version")
     //compile "ch.qos.logback:logback-classic:$logback_version"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation(group: 'junit', name: 'junit', version: '4.12')
 }
