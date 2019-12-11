@@ -20,7 +20,7 @@ class PlayerService {
         }
     }
 
-    suspend fun getAllWidgets(): List<Player> = dbQuery {
+    suspend fun getAllPlayers(): List<Player> = dbQuery {
         Players.selectAll().map { toPlayer(it) }
     }
 
@@ -55,7 +55,7 @@ class PlayerService {
             key = (Players.insert {
                 it[login] = player.login
                 it[password] = player.password
-                it[data] = System.currentTimeMillis().toString()
+                it[data] = System.currentTimeMillis().toString() // НУЖНО БУДЕТ ОБНОВИТЬ ЭТУ СТРОКУ, ОТВЕЧ. ЗА РЕШЕННЫЕ ЗАГАДКИ
             } get Players.id)
         }
         return getPlayer(key)!!.also {
@@ -63,7 +63,7 @@ class PlayerService {
         }
     }
 
-    suspend fun deletePlayer(id: Int): Boolean {
+    suspend fun deletePlayer(id: Int): Boolean { // ВРЯД ЛИ ПОНАДОБИТСЯ
         return dbQuery {
             Players.deleteWhere { Players.id eq id } > 0
         }.also {
