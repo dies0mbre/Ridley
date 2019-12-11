@@ -26,11 +26,12 @@ fun Application.main() {
     }
 
     //DatabaseFactory.init()
-    //val playerService = PlayerService()
+    val playerService = PlayerService()
 
     routing {
         get("/") {
-            DatabaseFactory.init()
+            // DatabaseFactory.init() was the first one!!
+            call.respond(playerService.getAllPlayers())
             call.respond("The connection is built!")
 
         }

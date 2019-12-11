@@ -15,7 +15,7 @@ object DatabaseFactory {
     fun init() {
         // Database.connect("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver")
         Database.connect(hikari())
-        transaction {
+        /*transaction {
             create(Players)
             Players.insert {
                 it[login] = "admin"
@@ -29,7 +29,7 @@ object DatabaseFactory {
                 it[answer] = "David"
             }
 
-        }
+        }*/
     }
 
     private fun hikari(): HikariDataSource {
