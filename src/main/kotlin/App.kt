@@ -25,12 +25,13 @@ fun Application.main() {
         }
     }
 
-    DatabaseFactory.init()
-    val playerService = PlayerService()
+    //DatabaseFactory.init()
+    //val playerService = PlayerService()
 
     routing {
         get("/") {
-            call.respond(playerService.getAllPlayers())
+            DatabaseFactory.init()
+            call.respond("The connection is built!")
 
         }
         get("/signup/{login}/{password}") { // if signing up
