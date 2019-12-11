@@ -30,7 +30,7 @@ fun Application.main() {
 
     routing {
         get("/") {
-            // DatabaseFactory.init() was the first one!!
+            DatabaseFactory.init() //was the first one!!
             call.respond(playerService.getAllPlayers())
             call.respond("The connection is built!")
 
