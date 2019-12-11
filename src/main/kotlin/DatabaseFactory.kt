@@ -1,6 +1,7 @@
 package service
 
 import model.Players
+import model.Puzzles
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
@@ -21,6 +22,13 @@ object DatabaseFactory {
                 it[password] = "admin"
                 it[data] = "0:done"
             }
+            create(Puzzles)
+            Puzzles.insert {
+                it[name] = "David's Father"
+                it[text] = "David's father has three sons : Snap, Crackle and _____ ?"
+                it[answer] = "David"
+            }
+
         }
     }
 

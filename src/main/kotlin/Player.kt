@@ -9,6 +9,13 @@ object Players : Table() {
     val data = varchar("data", 500)
 }
 
+object Puzzles : Table() {
+    val id = integer("id").primaryKey().autoIncrement()
+    val name = varchar("name", 255)
+    val text = varchar("text", 1000)
+    val answer = varchar("answer", 255)
+}
+
 
 data class Player(
     val id: Int,

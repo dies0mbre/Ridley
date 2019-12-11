@@ -9,6 +9,7 @@ import io.ktor.jackson.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import model.NewPlayer
+import service.DatabaseFactory
 import service.PlayerService
 
 
@@ -24,9 +25,13 @@ fun Application.main() {
         }
     }
 
+    DatabaseFactory.init()
+    val playerService = PlayerService()
+
     routing {
         get("/") {
-            call.respond(HttpStatusCode.Accepted,"The connection is built")
+            call.respond(playerService.getAllPlayers())
+
         }
         get("/signup/{login}/{password}") { // if signing up
             val login = call.parameters["login"].toString()
