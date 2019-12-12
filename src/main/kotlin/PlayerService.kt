@@ -59,8 +59,8 @@ class PlayerService {
             .single()
     }
 
-    suspend fun updatePlayer(player: Player, dataN: String): Player? {
-        val login = player.login
+    suspend fun updatePlayer(player: Player?, dataN: String): Player? {
+        val login = player!!.login
         return if (login == null) {
             player
         } else {

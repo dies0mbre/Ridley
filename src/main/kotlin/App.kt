@@ -70,9 +70,13 @@ fun Application.main() {
             var  dataAr = mutableListOf<Int>()
             var i = 0;
             while ( i != data.length ){
-                if (data[i] != ',') str.plus(data[i].toString())
+                if (data[i] != ',') {
+                    str += data[i].toString()
+                }
                 else {
+                    //println("Finally! it is digit: $str")
                     dataAr.add(str.toInt())
+                    str = ""
                 }
                 ++i;
             }
@@ -92,14 +96,9 @@ fun Application.main() {
             val idPuzzle = call.parameters["id"]?.toInt()
             var data = playerService.getData(login).toString() // забираю текущие идентификаторы решенных загадок
             data += ",$idPuzzle"
-                //playerService.updatePlayer()
-        }
-
-        get("/random/{min}/{max}") {
-            val min = call.parameters["min"]?.toIntOrNull() ?: 0
-            val max = call.parameters["max"]?.toIntOrNull() ?: 10
-            val randomString = "${(min until max).shuffled().last()}"
-            call.respond(mapOf("value" to randomString))
+            val player = playerService?.getPlayer(login)
+            playerService.updatePlayer(player, data)
+            call.respond("1")
         }
     }
 }
