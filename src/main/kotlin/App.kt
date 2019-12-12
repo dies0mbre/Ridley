@@ -32,7 +32,7 @@ fun Application.main() {
 
     routing {
         get("/") {
-            call.respond(playerService.deletePlayer(2))
+            call.respond(playerService.getAllPlayers())
         }
         get("/test/{login}/{password}") {
             val login = call.parameters["login"].toString()
