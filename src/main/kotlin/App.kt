@@ -28,37 +28,33 @@ fun Application.main() {
 
     //DatabaseFactory.init()
     val playerService = PlayerService()
+    DatabaseFactory.init()
 
     routing {
         get("/") {
-            DatabaseFactory.init() //was the first one!!
-            call.respond(playerService.getAllPlayers())
             call.respond("The connection is built!")
-
         }
-        get("/test/{login}/{password}") {
+        post("/test/{login}/{password}") {
             val login = call.parameters["login"].toString()
             val password = call.parameters["password"].toString()
             call.respond("Finally!! you win is : $login $password")
         }
-        get("/signup/{login}/{password}") { // регистрация
+        post("/signup/{login}/{password}") { // регистрация
             val login = call.parameters["login"].toString()
             val password = call.parameters["password"].toString()
             // должен происходить коннект с базой данных на наличие логина,
             // если он есть, то отправлять ответ вида call.respond("existing_login")
             // иначе заносить новые поля в таблицу, инициализировать остальные поля пустыми
-            DatabaseFactory.init()
             if (playerService.getPlayer(login) != null) {
-                call.respond("Existing login")
+                call.respond("0") // Existing login
             }
             else {
                 val player = NewPlayer(login = login, password = password)
-                //PlayerService.addPlayer(player)
-                //call.respond(HttpStatusCode.Created, PlayerService.addPlayer(player))
-                playerService.addPlayer(NewPlayer(login = login, password = password))
+                playerService.addPlayer(player)
+                call.respond(HttpStatusCode.Created, "1")
             }
         }
-        get("/login/{login}/{password}") {
+        post("/login/{login}/{password}") {
             // осуществляется попытка входа
             val login = call.parameters["login"].toString()
             val pswd = call.parameters["password"].toString()
@@ -70,6 +66,11 @@ fun Application.main() {
                 call.respond(HttpStatusCode.Accepted, "The incorrect login or password")
             }
         }
+
+        put ("/") {
+
+        }
+
         get("/random/{min}/{max}") {
             val min = call.parameters["min"]?.toIntOrNull() ?: 0
             val max = call.parameters["max"]?.toIntOrNull() ?: 10
