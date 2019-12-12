@@ -31,6 +31,13 @@ class PlayerService {
             .singleOrNull()
     }
 
+    suspend fun compPlayerPswd(login: String, pswd : String): Player? = dbQuery {
+        Players.select {
+            (Players.login.eq(login) and Players.password.eq(pswd))
+        }.mapNotNull { toPlayer(it) }
+            .singleOrNull()
+    }
+
     suspend fun getPlayerById(id: Int): Player? = dbQuery {
         Players.select {
             (Players.id eq id)

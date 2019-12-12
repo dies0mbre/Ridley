@@ -54,16 +54,17 @@ fun Application.main() {
                 call.respond(HttpStatusCode.Created, "1")
             }
         }
-        post("/login/{login}/{password}") {
+        get("/login/{login}/{password}") {
             // осуществляется попытка входа
             val login = call.parameters["login"].toString()
-            val pswd = call.parameters["password"].toString()
-            try {
-                // происходит обращение в базу данных, ищется логин и сверяется пароль
-                // иначе бросается исключение
-                throw Exception()
-            } catch (e : Exception) {
-                call.respond(HttpStatusCode.Accepted, "The incorrect login or password")
+            val password = call.parameters["password"].toString()
+            if (playerService.getPlayer(login) != null) {
+                if (playerService.compPlayerPswd(login, password) != null)
+                    call.respond("1")
+                else call.respond("0")
+            }
+            else {
+                call.respond(HttpStatusCode.Created, "0")
             }
         }
 
