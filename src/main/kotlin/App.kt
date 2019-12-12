@@ -53,8 +53,8 @@ fun Application.main() {
             }
             else {
                 val player = NewPlayer(login = login, password = password)
-                PlayerService.addPlayer(player)
-                call.respond(HttpStatusCode.Created, PlayerService.addPlayer(player))
+                //PlayerService.addPlayer(player)
+                //call.respond(HttpStatusCode.Created, PlayerService.addPlayer(player))
                 playerService.addPlayer(NewPlayer(login = login, password = password))
             }
         }
