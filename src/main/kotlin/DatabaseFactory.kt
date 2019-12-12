@@ -39,7 +39,7 @@ object DatabaseFactory {
         config.username = "qfrpiztbjiouij"
         config.password = "ff042f9a1d4509cce619e34674addd64fba710b14289efd043421227656749e2"
 
-        config.maximumPoolSize = 10
+        config.maximumPoolSize = 1
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
         config.validate()

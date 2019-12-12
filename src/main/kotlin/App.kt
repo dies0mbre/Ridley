@@ -6,6 +6,7 @@ import io.ktor.features.*
 import io.ktor.gson.gson
 import io.ktor.http.*
 import io.ktor.jackson.*
+import io.ktor.request.receive
 import io.ktor.response.*
 import io.ktor.routing.*
 import model.NewPlayer
@@ -35,12 +36,27 @@ fun Application.main() {
             call.respond("The connection is built!")
 
         }
-        get("/signup/{login}/{password}") { // if signing up
+        get("/test/{login}/{password}") {
             val login = call.parameters["login"].toString()
-            val pswd = call.parameters["password"].toString()
+            val password = call.parameters["password"].toString()
+            call.respond("Finally!! you win is : $login $password")
+        }
+        get("/signup/{login}/{password}") { // регистрация
+            val login = call.parameters["login"].toString()
+            val password = call.parameters["password"].toString()
             // должен происходить коннект с базой данных на наличие логина,
             // если он есть, то отправлять ответ вида call.respond("existing_login")
             // иначе заносить новые поля в таблицу, инициализировать остальные поля пустыми
+            DatabaseFactory.init()
+            if (playerService.getPlayer(login) != null) {
+                call.respond("Existing login")
+            }
+            else {
+                val player = NewPlayer(login = login, password = password)
+                PlayerService.addPlayer(player)
+                call.respond(HttpStatusCode.Created, PlayerService.addPlayer(player))
+                playerService.addPlayer(NewPlayer(login = login, password = password))
+            }
         }
         get("/login/{login}/{password}") {
             // осуществляется попытка входа

@@ -26,7 +26,6 @@ data class Player(
 
 
 data class NewPlayer(
-    val id: Int?,
     val login: String,
     val password: String
 )

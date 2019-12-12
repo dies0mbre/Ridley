@@ -24,27 +24,32 @@ class PlayerService {
         Players.selectAll().map { toPlayer(it) }
     }
 
-    suspend fun getPlayer(id: Int): Player? = dbQuery {
+    suspend fun getPlayer(login: String): Player? = dbQuery {
+        Players.select {
+            (Players.login eq login)
+        }.mapNotNull { toPlayer(it) }
+            .singleOrNull()
+    }
+
+    suspend fun getPlayerById(id: Int): Player? = dbQuery {
         Players.select {
             (Players.id eq id)
         }.mapNotNull { toPlayer(it) }
             .singleOrNull()
     }
 
-    suspend fun updatePlayer(player: NewPlayer): Player? {
-        val id = player.id
-        return if (id == null) {
-            addPlayer(player)
+    suspend fun updatePlayer(player: Player): Player? {
+        val login = player.login
+        return if (login == null) {
+            player
         } else {
             dbQuery {
-                Players.update({ Players.id eq id }) {
-                    it[login] = player.login
-                    it[password] = player.password
-                    it[data] = System.currentTimeMillis().toString()
+                Players.update({ Players.login eq login }) {
+                    it[data] = System.currentTimeMillis().toString() // !!! когда происходит победа !!!
                 }
             }
-            getPlayer(id).also {
-                onChange(ChangeType.UPDATE, id, it)
+            getPlayer(player.login).also {
+                onChange(ChangeType.UPDATE, player.id, it)
             }
         }
     }
@@ -55,10 +60,10 @@ class PlayerService {
             key = (Players.insert {
                 it[login] = player.login
                 it[password] = player.password
-                it[data] = System.currentTimeMillis().toString() // НУЖНО БУДЕТ ОБНОВИТЬ ЭТУ СТРОКУ, ОТВЕЧ. ЗА РЕШЕННЫЕ ЗАГАДКИ
+                it[data] = ""
             } get Players.id)
         }
-        return getPlayer(key)!!.also {
+        return getPlayerById(key)!!.also {
             onChange(ChangeType.CREATE, key, it)
         }
     }
