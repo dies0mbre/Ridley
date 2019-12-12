@@ -67,14 +67,14 @@ fun Application.main() {
             val login = call.parameters["login"].toString()
             val data = playerService.getData(login).toString()
             var str  = "";
-            var  dataAr = mutableListOf<Int>()
+            var dataAr = mutableListOf<Int>()
             var i = 0;
             while ( i != data.length ){
-                if (data[i] != ',') {
+                if ((data[i] == ',') and (i==0)) continue
+                else if (data[i] != ',') {
                     str += data[i].toString()
                 }
                 else {
-                    //println("Finally! it is digit: $str")
                     dataAr.add(str.toInt())
                     str = ""
                 }
@@ -96,7 +96,7 @@ fun Application.main() {
             val idPuzzle = call.parameters["id"]?.toInt()
             var data = playerService.getData(login).toString() // забираю текущие идентификаторы решенных загадок
             data += ",$idPuzzle"
-            val player = playerService?.getPlayer(login)
+            val player = playerService.getPlayer(login)
             playerService.updatePlayer(player, data)
             call.respond("1")
         }
