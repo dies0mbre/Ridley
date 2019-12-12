@@ -66,7 +66,7 @@ fun Application.main() {
         get ("/play/enter/{login}") {
             val login = call.parameters["login"].toString()
             val data = playerService.getData(login).toString()
-            var str  = "";
+            var str  = ""
             var  dataAr = mutableListOf<Int>()
             var i = 0;
             while ( i != data.length ){
@@ -79,13 +79,13 @@ fun Application.main() {
                     dataAr.add(str.toInt())
                     str = ""
                 }
-                ++i;
+                ++i
             }
 
             i = 1 // идентификатор загадки нерешенной
             for ( id in dataAr) {
                 if ( i != id ) break;
-                else i++;
+                else i++
             }
 
             val currentPuzzle : Puzzle = playerService.getPuzzle(i)
