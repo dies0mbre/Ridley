@@ -67,12 +67,13 @@ fun Application.main() {
             val login = call.parameters["login"].toString()
             val data = playerService.getData(login).toString()
             var str  = "";
-            var dataAr = mutableListOf<Int>()
+            var  dataAr = mutableListOf<Int>()
             var i = 0;
             while ( i != data.length ){
-                if ((data[i] == ',') and (i==0)) continue
+                if ((data[i] == ',') and (i==0)) {}
                 else if (data[i] != ',') {
                     str += data[i].toString()
+                    if (i == data.length-1) dataAr.add(str.toInt())
                 }
                 else {
                     dataAr.add(str.toInt())
