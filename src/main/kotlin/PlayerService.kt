@@ -75,7 +75,7 @@ class PlayerService {
         }
     }
 
-    suspend fun deletePlayer(id: Int): Boolean { // ВРЯД ЛИ ПОНАДОБИТСЯ
+    suspend fun deletePlayer(id: Int): Boolean { // ВРЯД ЛИ ПОНАДОБИТСЯ АГАГА МММММ
         return dbQuery {
             Players.deleteWhere { Players.id eq id } > 0
         }.also {
