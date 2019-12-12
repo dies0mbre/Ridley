@@ -34,12 +34,12 @@ fun Application.main() {
         get("/") {
             call.respond("The connection is built!")
         }
-        post("/test/{login}/{password}") {
+        get("/test/{login}/{password}") {
             val login = call.parameters["login"].toString()
             val password = call.parameters["password"].toString()
             call.respond("Finally!! you win is : $login $password")
         }
-        post("/signup/{login}/{password}") { // регистрация
+        get("/signup/{login}/{password}") { // регистрация
             val login = call.parameters["login"].toString()
             val password = call.parameters["password"].toString()
             // должен происходить коннект с базой данных на наличие логина,
