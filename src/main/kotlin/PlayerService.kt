@@ -45,14 +45,28 @@ class PlayerService {
             .singleOrNull()
     }
 
-    suspend fun updatePlayer(player: Player): Player? {
+    suspend fun getData(login: String) : String? = dbQuery {
+        Players.select {
+            (Players.login eq login)
+        }.mapNotNull { toPlayer(it) }
+            .singleOrNull()?.data
+    }
+
+    suspend fun getPuzzle(id : Int) : Puzzle = dbQuery {
+        Puzzles.select{
+            (Puzzles.id eq id)
+        }.mapNotNull { toPuzzle(it) }
+            .single()
+    }
+
+    suspend fun updatePlayer(player: Player, dataN: String): Player? {
         val login = player.login
         return if (login == null) {
             player
         } else {
             dbQuery {
                 Players.update({ Players.login eq login }) {
-                    it[data] = System.currentTimeMillis().toString() // !!! когда происходит победа !!!
+                    it[data] = dataN // !!! когда происходит победа !!!
                 }
             }
             getPlayer(player.login).also {
@@ -89,5 +103,13 @@ class PlayerService {
             login = row[Players.login],
             password = row[Players.password],
             data = row[Players.data]
+        )
+
+    private fun toPuzzle(row: ResultRow): Puzzle =
+        Puzzle(
+            id = row[Puzzles.id],
+            name = row[Puzzles.name],
+            text = row[Puzzles.text],
+            answer = row[Puzzles.answer]
         )
 }

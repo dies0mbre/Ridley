@@ -10,6 +10,7 @@ import io.ktor.request.receive
 import io.ktor.response.*
 import io.ktor.routing.*
 import model.NewPlayer
+import model.Puzzle
 import service.DatabaseFactory
 import service.PlayerService
 
@@ -34,17 +35,10 @@ fun Application.main() {
         get("/") {
             call.respond(playerService.getAllPlayers())
         }
-        get("/test/{login}/{password}") {
-            val login = call.parameters["login"].toString()
-            val password = call.parameters["password"].toString()
-            call.respond("Finally!! you win is : $login $password")
-        }
+
         get("/signup/{login}/{password}") { // регистрация
             val login = call.parameters["login"].toString()
             val password = call.parameters["password"].toString()
-            // должен происходить коннект с базой данных на наличие логина,
-            // если он есть, то отправлять ответ вида call.respond("existing_login")
-            // иначе заносить новые поля в таблицу, инициализировать остальные поля пустыми
             if (playerService.getPlayer(login) != null) {
                 call.respond("0") // Existing login
             }
@@ -54,6 +48,7 @@ fun Application.main() {
                 call.respond(HttpStatusCode.Created, "1")
             }
         }
+
         get("/login/{login}/{password}") {
             // осуществляется попытка входа
             val login = call.parameters["login"].toString()
@@ -68,8 +63,36 @@ fun Application.main() {
             }
         }
 
-        put ("/") {
+        get ("/play/enter/{login}") {
+            val login = call.parameters["login"].toString()
+            val data = playerService.getData(login).toString()
+            var str  = "";
+            var  dataAr = mutableListOf<Int>()
+            var i = 0;
+            while ( i != data.length ){
+                if (data[i] != ',') str.plus(data[i].toString())
+                else {
+                    dataAr.add(str.toInt())
+                }
+                ++i;
+            }
 
+            i = 1 // идентификатор загадки нерешенной
+            for ( id in dataAr) {
+                if ( i != id ) break;
+                else i++;
+            }
+
+            val currentPuzzle : Puzzle = playerService.getPuzzle(i)
+            call.respond(currentPuzzle)
+        }
+
+        get ("/play/{id}/{login}") {
+            val login = call.parameters["login"].toString()
+            val idPuzzle = call.parameters["id"]?.toInt()
+            var data = playerService.getData(login).toString() // забираю текущие идентификаторы решенных загадок
+            data += ",$idPuzzle"
+                //playerService.updatePlayer()
         }
 
         get("/random/{min}/{max}") {

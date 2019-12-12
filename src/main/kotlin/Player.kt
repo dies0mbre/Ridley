@@ -16,6 +16,13 @@ object Puzzles : Table() {
     val answer = varchar("answer", 255)
 }
 
+data class Puzzle(
+    val id : Int,
+    val name : String,
+    val text : String,
+    val answer : String
+)
+
 
 data class Player(
     val id: Int,
