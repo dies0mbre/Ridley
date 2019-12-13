@@ -71,6 +71,7 @@ fun Application.main() {
         get ("/play/enter/{login}") {
             val login = call.parameters["login"].toString()
             val data = playerService.getData(login).toString()
+            
             var str  = ""
             var dataAr : MutableList<Int> = mutableListOf()
             var i = 0;
