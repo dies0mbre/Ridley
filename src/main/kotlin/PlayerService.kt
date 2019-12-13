@@ -6,7 +6,7 @@ import service.DatabaseFactory.dbQuery
 
 class PlayerService {
 
-    private val listeners = mutableMapOf<Int, suspend (Notification<Player?>) -> Unit>()
+    val listeners = mutableMapOf<Int, suspend (Notification<Player?>) -> Unit>()
 
     fun addChangeListener(id: Int, listener: suspend (Notification<Player?>) -> Unit) {
         listeners[id] = listener

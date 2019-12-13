@@ -27,13 +27,12 @@ fun Application.main() {
         }
     }
 
-    //DatabaseFactory.init()
     val playerService = PlayerService()
     DatabaseFactory.init()
 
     routing {
         get("/") {
-            call.respond(playerService.getAllPlayers())
+            call.respond(playerService.listeners)
         }
 
         get("/signup/{login}/{password}") { // регистрация
