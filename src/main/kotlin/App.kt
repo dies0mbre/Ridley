@@ -32,12 +32,11 @@ fun Application.main() {
 
     routing {
         get("/") {
-            playerService.deletePlayer(1)
-            playerService.deletePlayer(5)
-            playerService.deletePlayer(6)
-            val player = NewPlayer(login = "admin", password = "admin")
-            playerService.addPlayer(player)
-            
+            playerService.deletePlayer(4)
+            playerService.deletePlayer(8)
+            //val player = NewPlayer(login = "admin", password = "admin")
+            //playerService.addPlayer(player)
+
             call.respond(playerService.getAllPlayers())
         }
 
