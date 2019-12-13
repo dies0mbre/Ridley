@@ -23,6 +23,11 @@ data class Puzzle(
     val answer : String
 )
 
+data class NewPuzzle(
+    val name : String,
+    val text : String,
+    val answer : String
+)
 
 data class Player(
     val id: Int,

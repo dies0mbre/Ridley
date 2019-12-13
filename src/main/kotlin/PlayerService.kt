@@ -24,6 +24,10 @@ class PlayerService {
         Players.selectAll().map { toPlayer(it) }
     }
 
+    suspend fun getAllPuzzles(): List<Puzzle> = dbQuery {
+        Puzzles.selectAll().map { toPuzzle(it) }
+    }
+
     suspend fun getPlayer(login: String): Player? = dbQuery {
         Players.select {
             (Players.login eq login)
@@ -86,6 +90,17 @@ class PlayerService {
         }
         return getPlayerById(key)!!.also {
             onChange(ChangeType.CREATE, key, it)
+        }
+    }
+
+    suspend fun addPuzzle(puzzle : NewPuzzle) {
+        var key = 0
+        dbQuery {
+            key = (Puzzles.insert {
+                it[name] = puzzle.name
+                it[text] = puzzle.text
+                it[answer] = puzzle.answer
+            } get Puzzles.id)
         }
     }
 

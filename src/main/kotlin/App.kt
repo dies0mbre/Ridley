@@ -10,6 +10,7 @@ import io.ktor.request.receive
 import io.ktor.response.*
 import io.ktor.routing.*
 import model.NewPlayer
+import model.NewPuzzle
 import model.Puzzle
 import service.DatabaseFactory
 import service.PlayerService
@@ -32,12 +33,23 @@ fun Application.main() {
 
     routing {
         get("/") {
-            playerService.deletePlayer(4)
-            playerService.deletePlayer(8)
-            //val player = NewPlayer(login = "admin", password = "admin")
-            //playerService.addPlayer(player)
+            playerService.addPuzzle(NewPuzzle(name = "Take It Or Leave It",
+                text = "The more you take, the more you leave behind. What am I?",
+                answer = "Footsteps"))
+            playerService.addPuzzle(NewPuzzle(name = "Put Me Out",
+                text = "I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?",
+                answer = "Fire"))
+            playerService.addPuzzle(NewPuzzle(name = "The Keys",
+                text = "What has many keys, but can't even open a single door?",
+                answer = "A piano"))
+            playerService.addPuzzle(NewPuzzle(name = "Broken Usefulness",
+                text = "What is more useful when it is broken?",
+                answer = "An egg"))
+            playerService.addPuzzle(NewPuzzle(name = "Kids Riddles M",
+                text = "I make two people out of one.  What am I?",
+                answer = "A mirror"))
 
-            call.respond(playerService.getAllPlayers())
+            call.respond(playerService.getAllPuzzles())
         }
 
         get("/signup/{login}/{password}") { // регистрация
