@@ -33,7 +33,7 @@ fun Application.main() {
 
     routing {
         get("/") {
-            call.respond(playerService.getAllPuzzles())
+            call.respond(playerService.getAllPlayers())
         }
 
         get("/signup/{login}/{password}") { // регистрация
@@ -99,7 +99,7 @@ fun Application.main() {
             data += ",$idPuzzle"
             val player = playerService.getPlayer(login)
             playerService.updatePlayer(player, data)
-            call.respond("1")
+            call.respondRedirect("/play/enter/{login}", permanent = true)
         }
     }
 }
