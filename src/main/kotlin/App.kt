@@ -33,25 +33,6 @@ fun Application.main() {
 
     routing {
         get("/") {
-            playerService.addPuzzle(NewPuzzle(name = "Almost Alive",
-                text = "They have not flesh, nor feathers, nor scales, nor bone. Yet they have fingers and thumbs of their own. What are they?",
-                answer = "Gloves"))
-            playerService.addPuzzle(NewPuzzle(name = "Kids Riddles B",
-                text = "I am white when I am dirty, and black when I am clean. What am I?",
-                answer = "A blackboard"))
-            playerService.addPuzzle(NewPuzzle(name = "Do You Have It?",
-                text = "Poor people have it. Rich people need it. If you eat it you die. what is it?",
-                answer = "Nothing"))
-            playerService.addPuzzle(NewPuzzle(name = "Birthday Riddle",
-                text = "What goes up but never comes down??",
-                answer = "Age"))
-            playerService.addPuzzle(NewPuzzle(name = "Kids Riddles H",
-                text = "The more you take away, the more I become. What am I?",
-                answer = "A hole"))
-            playerService.addPuzzle(NewPuzzle(name = "Ancient?",
-                text = "There is an ancient invention still used in some parts of the world today that allows people to see through walls. What is it?",
-                answer = "A window"))
-
             call.respond(playerService.getAllPuzzles())
         }
 
