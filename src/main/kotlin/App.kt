@@ -99,7 +99,7 @@ fun Application.main() {
             data += ",$idPuzzle"
             val player = playerService.getPlayer(login)
             playerService.updatePlayer(player, data)
-            call.respondRedirect("/play/enter/{login}", permanent = true)
+            call.respondRedirect("/play/enter/$login", permanent = true)
         }
     }
 }
