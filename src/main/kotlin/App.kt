@@ -83,13 +83,14 @@ fun Application.main() {
             }
 
             dataAr.distinct()
+            for (id in dataAr) println(id)
 
             i = 1 // идентификатор загадки нерешенной
             for ( id in dataAr) {
                 if ( i != id ) break;
                 else i++
             }
-
+            println("Shittt sending riddle number of $i")
             val currentPuzzle : Puzzle = playerService.getPuzzle(i)
             call.respond(currentPuzzle)
         }
