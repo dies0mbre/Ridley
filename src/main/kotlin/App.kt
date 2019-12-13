@@ -63,6 +63,11 @@ fun Application.main() {
             }
         }
 
+        get ("/profile/{login}"){
+            val login = call.parameters["login"].toString()
+            call.respond(playerService.getPlayerNotNull(login))
+        }
+
         get ("/play/enter/{login}") {
             val login = call.parameters["login"].toString()
             val data = playerService.getData(login).toString()
