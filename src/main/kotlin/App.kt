@@ -67,7 +67,7 @@ fun Application.main() {
             val login = call.parameters["login"].toString()
             val data = playerService.getData(login).toString()
             var str  = ""
-            var  dataAr : MutableList<Int> = mutableListOf()
+            var dataAr : MutableList<Int> = mutableListOf()
             var i = 0;
             while ( i != data.length ){
                 if ((data[i] == ',') and (i==0)) {}
@@ -82,8 +82,8 @@ fun Application.main() {
                 ++i
             }
 
-            dataAr.distinct()
-            for (id in dataAr) println(id)
+            dataAr = dataAr.distinct() as MutableList<Int>
+            println(dataAr)
 
             i = 1 // идентификатор загадки нерешенной
             for ( id in dataAr) {
