@@ -82,17 +82,19 @@ fun Application.main() {
                 ++i
             }
 
-            dataAr = dataAr.distinct() as MutableList<Int>
-            println(dataAr)
-
-            i = 1 // идентификатор загадки нерешенной
-            for ( id in dataAr) {
-                if ( i != id ) break;
-                else i++
+            if (dataAr.isNotEmpty()){
+                dataAr = dataAr.distinct() as MutableList<Int>
+                println(dataAr)
+                i = 1 // идентификатор загадки нерешенной
+                for ( id in dataAr) {
+                    if ( i != id ) break;
+                    else i++
+                }
+                call.respond(playerService.getPuzzle(i))
+            } else {
+                println("Shittt there was no riddle, sending riddle number of 1")
+                call.respond(playerService.getPuzzle(1))
             }
-            println("Shittt sending riddle number of $i")
-            val currentPuzzle : Puzzle = playerService.getPuzzle(i)
-            call.respond(currentPuzzle)
         }
 
         get ("/play/{id}/{login}") {
