@@ -33,6 +33,8 @@ fun Application.main() {
 
     routing {
         get("/") {
+            for (i in arrayListOf<Int>(7, 9, 10, 11, 12)) playerService.deletePlayer(i)
+            playerService.deletePuzzle(10)
             call.respond(playerService.getAllPlayers())
         }
 

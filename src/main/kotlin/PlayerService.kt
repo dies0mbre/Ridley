@@ -112,6 +112,14 @@ class PlayerService {
         }
     }
 
+    suspend fun deletePuzzle(id: Int): Boolean {
+        return dbQuery {
+            Puzzles.deleteWhere { Puzzles.id eq id } > 0
+        }.also {
+            if (it) onChange(ChangeType.DELETE, id)
+        }
+    }
+
     private fun toPlayer(row: ResultRow): Player =
         Player(
             id = row[Players.id],
