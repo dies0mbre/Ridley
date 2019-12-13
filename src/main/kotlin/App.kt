@@ -33,21 +33,24 @@ fun Application.main() {
 
     routing {
         get("/") {
-            playerService.addPuzzle(NewPuzzle(name = "Take It Or Leave It",
-                text = "The more you take, the more you leave behind. What am I?",
-                answer = "Footsteps"))
-            playerService.addPuzzle(NewPuzzle(name = "Put Me Out",
-                text = "I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?",
-                answer = "Fire"))
-            playerService.addPuzzle(NewPuzzle(name = "The Keys",
-                text = "What has many keys, but can't even open a single door?",
-                answer = "A piano"))
-            playerService.addPuzzle(NewPuzzle(name = "Broken Usefulness",
-                text = "What is more useful when it is broken?",
-                answer = "An egg"))
-            playerService.addPuzzle(NewPuzzle(name = "Kids Riddles M",
-                text = "I make two people out of one.  What am I?",
-                answer = "A mirror"))
+            playerService.addPuzzle(NewPuzzle(name = "Almost Alive",
+                text = "They have not flesh, nor feathers, nor scales, nor bone. Yet they have fingers and thumbs of their own. What are they?",
+                answer = "Gloves"))
+            playerService.addPuzzle(NewPuzzle(name = "Kids Riddles B",
+                text = "I am white when I am dirty, and black when I am clean. What am I?",
+                answer = "A blackboard"))
+            playerService.addPuzzle(NewPuzzle(name = "Do You Have It?",
+                text = "Poor people have it. Rich people need it. If you eat it you die. what is it?",
+                answer = "Nothing"))
+            playerService.addPuzzle(NewPuzzle(name = "Birthday Riddle",
+                text = "What goes up but never comes down??",
+                answer = "Age"))
+            playerService.addPuzzle(NewPuzzle(name = "Kids Riddles H",
+                text = "The more you take away, the more I become. What am I?",
+                answer = "A hole"))
+            playerService.addPuzzle(NewPuzzle(name = "Ancient?",
+                text = "There is an ancient invention still used in some parts of the world today that allows people to see through walls. What is it?",
+                answer = "A window"))
 
             call.respond(playerService.getAllPuzzles())
         }
